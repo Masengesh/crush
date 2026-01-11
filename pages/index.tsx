@@ -1,8 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import { apiClient } from '../utils/api';
