@@ -87,8 +87,6 @@ export default function Terms() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </>
   );
 }
