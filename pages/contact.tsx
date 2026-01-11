@@ -93,7 +93,7 @@ export default function Contact() {
                 </div>
                 <div className="mb-3">
                   <h3>Phone</h3>
-                  <p>1-800-DATING-APP</p>
+                  <p>+256786754337</p>
                 </div>
                 <div className="mb-3">
                   <h3>Address</h3>
