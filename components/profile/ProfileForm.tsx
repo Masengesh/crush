@@ -12,7 +12,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ onSave, loading }) => {
   const { user } = useAuth();
   const [formData, setFormData] = useState({
     bio: user?.bio || '',
-    hobbies: user?.hobbies || [],
+    interests: user?.interests || [],
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -23,8 +23,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ onSave, loading }) => {
       newErrors.bio = 'Bio must be less than 500 characters';
     }
 
-    if (formData.hobbies.length > 10) {
-      newErrors.hobbies = 'Maximum 10 hobbies allowed';
+    if (formData.interests.length > 10) {
+      newErrors.interests = 'Maximum 10 interests allowed';
     }
 
     setErrors(newErrors);
@@ -38,8 +38,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ onSave, loading }) => {
     }
   };
 
-  const handleHobbiesChange = (hobbies: string[]) => {
-    setFormData(prev => ({ ...prev, hobbies }));
+  const handleInterestsChange = (interests: string[]) => {
+    setFormData(prev => ({ ...prev, interests }));
   };
 
   return (
@@ -63,11 +63,11 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ onSave, loading }) => {
         </div>
 
         <InterestSelector
-          hobbies={formData.hobbies}
-          onHobbiesChange={handleHobbiesChange}
+          hobbies={formData.interests}
+          onHobbiesChange={handleInterestsChange}
           availableInterests={['Reading', 'Sports', 'Music', 'Travel', 'Cooking', 'Art', 'Technology', 'Fitness', 'Movies', 'Gaming']}
         />
-        {errors.hobbies && <span className="error">{errors.hobbies}</span>}
+        {errors.interests && <span className="error">{errors.interests}</span>}
 
         <Button type="submit" disabled={loading}>
           {loading ? 'Saving...' : 'Save Profile'}

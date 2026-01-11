@@ -15,8 +15,17 @@ interface User {
     country: string;
   };
   settings?: {
-    notifications: boolean;
+    notifications: {
+      email: boolean;
+      push: boolean;
+    };
     privacy: string;
+  };
+  isOnline?: boolean;
+  isPaused?: boolean;
+  subscription?: {
+    plan: string;
+    expiry?: string;
   };
   isEscort: boolean;
   escortDetails?: any;
@@ -36,7 +45,10 @@ interface AuthContextType {
   logout: () => Promise<void>;
   updateProfile: (profileData: any) => Promise<void>;
   updateSettings: (settingsData: any) => Promise<void>;
+  forgotPassword: (email: string) => Promise<void>;
+  resetPassword: (token: string, newPassword: string) => Promise<void>;
   loading: boolean;
+  error: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -57,6 +69,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // Check for stored token and user data
@@ -134,6 +147,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  const forgotPassword = async (email: string) => {
+    try {
+      setError(null);
+      await apiClient.forgotPassword(email);
+    } catch (error) {
+      setError(error.message);
+      throw error;
+    }
+  };
+
+  const resetPassword = async (token: string, newPassword: string) => {
+    try {
+      setError(null);
+      await apiClient.resetPassword(token, newPassword);
+    } catch (error) {
+      setError(error.message);
+      throw error;
+    }
+  };
+
   const value: AuthContextType = {
     user,
     token,
@@ -142,7 +175,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     logout,
     updateProfile,
     updateSettings,
+    forgotPassword,
+    resetPassword,
     loading,
+    error,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

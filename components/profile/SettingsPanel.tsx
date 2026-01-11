@@ -13,8 +13,8 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ onSave, loading }) => {
   const [formData, setFormData] = useState({
     isOnline: user?.isOnline || false,
     notifications: {
-      email: user?.notifications?.email ?? true,
-      push: user?.notifications?.push ?? true,
+      email: user?.settings?.notifications?.email ?? true,
+      push: user?.settings?.notifications?.push ?? true,
     },
     isPaused: user?.isPaused || false,
     currentPassword: '',
